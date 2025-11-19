@@ -32,7 +32,6 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
   User.findOne({username: username, password: md5(password)}).then((data) => {
-    console.log("data==="+data);
     if(!data){
         return res.render('success',{msg:"用户名或密码错误",url:"/login"});
     }

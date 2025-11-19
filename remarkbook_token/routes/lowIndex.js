@@ -35,7 +35,6 @@ router.post('/account', function(req, res, next) {
   //res.render('create', { title: 'Express' });
   let id = shortid.generate();
   db.get('accounts').unshift({id:id, ...req.body}).write();
-  console.log(req.body);
   res.render("success",{msg:"添加成功",url:"/account"});
 });
 module.exports = router;

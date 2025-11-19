@@ -17,7 +17,6 @@ router.get('/', function(req, res, next) {
 router.get('/account', checkLogin, function(req, res, next) {
 
   Account.find().sort({time: -1}).then((accounts) => {
-    console.log("accounts==="+accounts);
     res.render('list', { accounts:accounts, moment:moment });
   });
 });

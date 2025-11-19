@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var apiRouter = require('./routes/api/index');
+var authApiRouter = require('./routes/api/auth');
 var indexRouter = require('./routes/web/index');
 var authRouter = require('./routes/web/auth');
 var lowIndexRouter = require('./routes/lowIndex');
@@ -38,6 +39,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//如果apiRouter在authApiRouter之前，authApiRouter会受到apiRouter中间件的影响
+app.use('/api', authApiRouter);
+//根据挂载顺序，apiRouter中的checkToken中间件会在经过apiRouter时才生效，
+// 此时authApiRouter已经完成请求，所以不会受到影响
 app.use('/api', apiRouter);
 app.use('/', indexRouter);
 app.use('/', authRouter);
