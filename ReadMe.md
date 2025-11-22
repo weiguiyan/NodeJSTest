@@ -1,0 +1,2 @@
+remarkbook由session cookie实现鉴权
+remarkbook_token添加了后端api并由Token鉴权
