@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../../module/user');
 const moment = require('moment');
 const md5 = require('md5');
+const axios = require('axios');
 
 
 //low DB
@@ -30,6 +31,39 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+  //原生XHR，不适用express
+  // const xhr = new XMLHttpRequest();
+  // const { username, password } = req.body;
+  // xhr.open("POST","http:127.0.0.1:3001/api/login");
+  // xhr.send(JSON.stringify(req.body));
+  // xhr.onreadystatechange = () => {
+  //   if(xhr.readyState === 4) {
+  //     if(xhr.status >= 200 && xhr.status <300) {
+  //       if(xhr.response.code === '0000') {
+  //         console.log(xhr.response.token);
+  //         req.header.token = xhr.response.token;
+  //         res.redirect('/account');
+  //       }
+  //     }
+  //   }
+  // }
+
+
+  //使用axios，待续。。。
+    //  axios({
+    //   method: 'post',
+    //   url: 'http://127.0.0.1:3001/api/login',
+    //   data: req.body
+    //  }).then((response) => {
+    //   if(response.data.code === '0000') {
+    //       console.log(response.data.token);
+    //       res.cookie('token', response.data.token, { httpOnly: true, maxAge: 24*3600*1000 });
+    //       //req.session.username = data.username
+    //       res.redirect('/account');
+    //     } else {
+    //       res.render('success',{msg:response.data.msg,url:"/login"});
+    //     }
+    //  })
   const { username, password } = req.body;
   User.findOne({username: username, password: md5(password)}).then((data) => {
     console.log("data==="+data);
